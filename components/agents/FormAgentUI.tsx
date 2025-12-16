@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
 import { type Agent } from "@/lib/constants";
 
 export interface FormAgentUIProps {
@@ -35,9 +36,18 @@ export function FormAgentUI({ agent }: FormAgentUIProps) {
     return (
         <div className="max-w-2xl">
             <Card variant="default" padding="lg">
-                <h2 className="text-lg font-semibold text-foreground mb-6">
-                    {agent.name} - Input Form
-                </h2>
+                <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary-500 to-primary-600 text-white text-xl">
+                            {agent.icon}
+                        </div>
+                        <div>
+                            <h2 className="text-lg font-semibold text-foreground">{agent.name}</h2>
+                            <p className="text-xs text-foreground-secondary">Provide details to run this agent</p>
+                        </div>
+                    </div>
+                    <Badge variant="default">{agent.category}</Badge>
+                </div>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-foreground mb-1.5">
@@ -47,6 +57,7 @@ export function FormAgentUI({ agent }: FormAgentUIProps) {
                             value={formData.title}
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                             placeholder="Enter a title"
+                            disabled={isSubmitting}
                             required
                         />
                     </div>
@@ -59,6 +70,7 @@ export function FormAgentUI({ agent }: FormAgentUIProps) {
                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                             placeholder="Enter a description"
                             className="flex min-h-[100px] w-full rounded-[var(--radius-md)] border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+                            disabled={isSubmitting}
                             required
                         />
                     </div>
@@ -71,6 +83,7 @@ export function FormAgentUI({ agent }: FormAgentUIProps) {
                                 value={formData.category}
                                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                                 className="flex h-10 w-full rounded-[var(--radius-md)] border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                disabled={isSubmitting}
                                 required
                             >
                                 <option value="">Select category</option>
@@ -87,6 +100,7 @@ export function FormAgentUI({ agent }: FormAgentUIProps) {
                                 value={formData.priority}
                                 onChange={(e) => setFormData({ ...formData, priority: e.target.value })}
                                 className="flex h-10 w-full rounded-[var(--radius-md)] border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                                disabled={isSubmitting}
                             >
                                 <option value="low">Low</option>
                                 <option value="medium">Medium</option>
